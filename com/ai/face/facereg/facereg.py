@@ -38,11 +38,13 @@ def reg(faceImg):
         result = compare.compare(_128descriptor_nparray, desc["face_descriptor"])
         # 根据比对结果，进行考勤处理
         if result < 0.6:
+            logger.info("考勤成功[员工编号：%s, 打卡时间：%s]" % (desc["employeeNo"], time.strftime("%Y-%m-%d %H:%M:%S")))
             print("考勤成功[员工编号：" + desc["employeeNo"] + "]")
             break
 
 def getFace():
-    cap = cv2.VideoCapture(0)
+    #rtsp://admin:admin@192.168.30.29:554//Streaming/Channels/1
+    cap = cv2.VideoCapture("rtsp://admin:admin@192.168.30.29:554//unicast/1/0/live")
     while cap.isOpened():
         ret, frame = cap.read()
         if not ret:
